@@ -1,6 +1,7 @@
 {
 	init: `{
 		if(trigger.output[[asset=base]] < 4000) bounce('Not enough funds for fees');
+		$fee = trigger.data.fee and trigger.data.fee >= 0 ? round(trigger.data.fee) : 1000;
 	}`,
 	messages: {
 		cases: [
@@ -21,7 +22,7 @@
 							definition: ["autonomous agent", {	
 	`{'init'}`: `{
 		"{$OWNER = '"||trigger.address||"';"
-	||	"$FEE = 1000;"
+	||	"$FEE = "|| $fee ||";"
 
 	||	"$base_inp = trigger.output[[asset=base]] - $FEE;"
 
