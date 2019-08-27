@@ -5,7 +5,7 @@ Allows any AA or user to have a place for exchanging assets
 
 Usage: send at least 4000 bytes, wait until posted definition be confirmed.
 
-Change default fee (1000) with `price` parameter.
+Change default fee (1000) with `fee` parameter.
 
 Leftover bytes will be returned to trigger address.
 
