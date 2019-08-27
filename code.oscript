@@ -57,19 +57,9 @@
 						`{'if'}`: `{"{$asset}"}`,
 						app: 'payment',
 						payload: {
-							asset:'base',
+							asset:`{"{$asset ? 'base' : var['asset']}"}`,
 							outputs: [
-								{address: `{"{trigger.address}"}`, amount: `{"{$to_send + $base_inp}"}`}
-							]
-						}
-					},
-					{
-						`{'if'}`: `{"{!$asset}"}`,
-						app: 'payment',
-						payload: {
-							asset:`{"{var['asset']}"}`,
-							outputs: [
-								{address: `{"{trigger.address}"}`, amount: `{"{$to_send}"}`}
+								{address: `{"{trigger.address}"}`, amount: `{"{$asset ? ($to_send + $base_inp) : $to_send}"}`}
 							]
 						}
 					},
@@ -139,11 +129,11 @@
 			},
 			{
 				`{'if'}`:`{
-						"{trigger.data.withdraw and var['asset']}"
+						"{trigger.data.withdraw}"
 					}`,
 				messages: [
 					{
-						`{'if'}`:`{"{balance[var['asset']] > 0}"}`,
+						`{'if'}`:`{"{var['asset'] and balance[var['asset']] > 0}"}`,
 						app: 'payment',
 						payload: {
 							asset:`{"{var['asset']}"}`,
