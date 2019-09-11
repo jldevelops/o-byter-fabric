@@ -23,7 +23,7 @@
 	`{'init'}`: `{
 		"{$OWNER = '"||trigger.address||"';"
 	||	"$FEE = "|| $fee ||";"
-
+	||	"$REGISTRY = 'C67F2UX4VNZZ2RJMPBADG7PRFPZZOT4E';"
 	||	"$base_inp = trigger.output[[asset=base]] - $FEE;"
 
 	||	"if(trigger.output[[asset!=base]].asset != 'none')"
@@ -54,8 +54,7 @@
 	||					"if($available < $to_send) bounce('Not enough funds, try lower amount');}"
 					}`,
 				messages: [
-					{	
-						`{'if'}`: `{"{$asset}"}`,
+					{
 						app: 'payment',
 						payload: {
 							asset:`{"{($asset ? 'base' : var['asset'])}"}`,
@@ -68,6 +67,33 @@
 						app: 'state',
 						`{'state'}`: `{
 							"{response['message'] = 'Exchanged ('||($asset ? 'assets': 'bytes')||') at '||var['price']||' bytes per token';}"
+						}`
+					}
+				]
+			},
+			{
+				`{'if'}`:`{
+						"{trigger.data.register}"
+					}`,
+				`{'init'}`: `{
+					"{if(var['name']) bounce('Already registered');"
+	||				"if(!trigger.data.name) bounce('Name param missing');}"
+				}`,
+				messages: [
+					{
+						app: 'payment',
+						payload: {
+							asset:'base',
+							outputs: [
+								{address: `{"{$REGISTRY}"}`, amount: `{"{$base_inp}"}`}
+							]
+						}
+					},
+					{
+						app: 'state',
+						`{'state'}`: `{
+							"{var['name'] = trigger.data.name;"
+	||						"var['owner'] = $OWNER;}"
 						}`
 					}
 				]
