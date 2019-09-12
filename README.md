@@ -9,4 +9,4 @@ Change default fee (1000) with `fee` parameter.
 
 Leftover bytes will be returned to trigger address.
 
-https://testnetexplorer.obyte.org/#tMboSnA3xX8S2NLxvCXbdW//GjGOwSx6L8SjwiHGqsQ=
+https://testnetexplorer.obyte.org/#ODcEb1Gla6ZRY6MvzXnsJkFtnvryrQGW3ILwjhlwHUU=
